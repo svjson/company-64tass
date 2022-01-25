@@ -14,14 +14,14 @@
   "Exports all label symbols using the 64tass binary, passing the
 location/directory as include path"
   (interactive)
-  (let ((src-file (or file-name buffer-file-name))
-        (include-dir (file-name-directory buffer-file-name))
-        (labels-file (concat (file-name-base file-name) ".labels")))
-    (call-process "64tass" nil nil nil
-                  (or file-name buffer-file-name)
-                  "-I" include-dir
-                  "-l" labels-file)
-    labels-file))
+  (let ((src-file (or file-name buffer-file-name)))
+    (let ((include-dir (file-name-directory buffer-file-name))
+          (labels-file (concat (file-name-base src-file) ".labels")))
+      (call-process "64tass" nil nil nil
+                    (or file-name buffer-file-name)
+                    "-I" include-dir
+                    "-l" labels-file)
+      labels-file)))
 
 (defun company-64tass-read-labels-file (file-name)
   "Returns the contents of the file as string"
