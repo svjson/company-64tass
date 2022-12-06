@@ -16,8 +16,9 @@ location/directory as include path"
   (interactive)
   (let ((src-file (or file-name buffer-file-name)))
     (let ((include-dir (file-name-directory buffer-file-name))
-          (labels-file (concat (file-name-base src-file) ".labels")))
+          (labels-file (concat (file-name-directory file-name) (file-name-base src-file) ".labels")))
       (call-process "64tass" nil nil nil
+                    "--no-output"
                     (or file-name buffer-file-name)
                     "-I" include-dir
                     "-l" labels-file)
